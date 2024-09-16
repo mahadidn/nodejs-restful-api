@@ -67,5 +67,6 @@ model Address {
   contact_id Int
   contact Contact @relation(fields: [contact_id], references: [id])
 
+  @@map("addresses")
 }
 
