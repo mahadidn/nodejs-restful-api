@@ -26,10 +26,10 @@ model User {
 model Token {
 
   id Int @id @default(autoincrement())
-  token String @db.VarChar(100)
+  token String @db.VarChar(100) @unique
   tokenUsername String @db.VarChar(100)
   user User @relation(fields: [tokenUsername], references: [username])
-  createdAt DateTime
+  createdAt DateTime @default(now())
   expiresAt DateTime
   device String?
   ipAddress String?
