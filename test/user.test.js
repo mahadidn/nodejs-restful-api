@@ -96,11 +96,41 @@ describe('POST /api/users/login', () => {
                 password: "rahasia"
             });
 
-        logger.error(result.body.data);
         expect(result.status).toBe(200);
         expect(result.body.data.token).toBeDefined();
         expect(result.body.data.name).toBeDefined();
 
+    });
+
+    it('should reject if request is invalid', async () => {
+        const result = await supertest(web)
+            .post('/api/users/login')
+            .set('device', 'iPhone 12')
+            .set('user-agent', 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15A372 Safari/604.1')
+            .set('X-Forwarded-For', '192.168.1.5')
+            .send({
+                username: "",
+                password: ""
+            });
+
+        expect(result.status).toBe(400);
+        expect(result.body.errors).toBeDefined();
+    });
+
+    it('should reject if password is wrong', async () => {
+        const result = await supertest(web)
+            .post('/api/users/login')
+            .set('device', 'iPhone 12')
+            .set('user-agent', 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15A372 Safari/604.1')
+            .set('X-Forwarded-For', '192.168.1.5')
+            .send({
+                username: "mahadi",
+                password: "fjsndd"
+            });
+
+        logger.error(result);
+        expect(result.status).toBe(401);
+        expect(result.body.errors).toBeDefined();
     });
 
 })
