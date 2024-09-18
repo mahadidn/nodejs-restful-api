@@ -21,7 +21,7 @@ describe('POST /api/users', () => {
                 name: "Mahadi Dwi Nugraha"
             });
 
-        logger.error(result);
+        // logger.error(result);
         expect(result.status).toBe(200);
         expect(result.body.data.username).toBe("mahadi");
         expect(result.body.data.name).toBe("Mahadi Dwi Nugraha");
@@ -128,9 +128,35 @@ describe('POST /api/users/login', () => {
                 password: "fjsndd"
             });
 
-        logger.error(result);
+        // logger.error(result);
         expect(result.status).toBe(401);
         expect(result.body.errors).toBeDefined();
+    });
+
+})
+
+
+// cek user login
+describe('GET /api/users/current', () => {
+    beforeEach( async () => {
+        await createTestUser();
+    });
+
+    afterEach( async () => {
+        await removeTestUser();
+    });
+
+
+
+    it('should can get current user', async () => {
+        const result = await supertest(web)
+            .post('/api/users/current')
+            .set('Authorization', 'test');
+
+
+        expect(result.status).toBe(200);
+        expect(result.body.data.username).toBe('mahadi');
+        expect(result.body.data.name).toBe('Mahadi Dwi Nugraha');
     });
 
 })

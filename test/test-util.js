@@ -50,16 +50,16 @@ export const createTestUser = async () => {
         }
     });
 
-    // await prismaClient.token.create({
-    //     data: {
-    //         token: "test",
-    //         tokenUsername: user.username,
-    //         device: "laptop",
-    //         ipAddress: "192.168.1.1",
-    //         userAgent: "mdn run time",
-    //         expiresAt: new Date(Date.now() + 36000000),
-    //     },
-    // });
+    await prismaClient.token.create({
+        data: {
+            token: "test",
+            tokenUsername: user.username,
+            device: "laptop",
+            ipAddress: "192.168.1.1",
+            userAgent: "mdn run time",
+            expiresAt: new Date(Date.now() + 36000000),
+        },
+    });
 
 }
 
