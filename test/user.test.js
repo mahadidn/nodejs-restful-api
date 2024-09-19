@@ -269,4 +269,14 @@ describe('DELETE /api/users/logout', () => {
         const user = await getTokenUser();
         expect(user).toBeNull();
     });
+
+    it('should reject logout if token is invalid', async () => {
+        const result = await supertest(web)
+                        .delete('/api/users/logout')
+                        .set('Authorization', 'salah');
+
+        
+        expect(result.status).toBe(401);
+    });
+
 });
