@@ -6,6 +6,7 @@ const userRouter = express.Router();
 userRouter.use(authMiddleware);
 userRouter.post('/api/users/current', userController.get);
 userRouter.patch('/api/users/current', userController.update);
+userRouter.delete('/api/users/logout', userController.logout);
 
 export {
     userRouter

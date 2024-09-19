@@ -71,3 +71,11 @@ export const getTestUser = async () => {
         }
     });
 }
+
+export const getTokenUser = async () => {
+    return prismaClient.token.findUnique({
+        where: {
+            token: "test"
+        }
+    });
+}

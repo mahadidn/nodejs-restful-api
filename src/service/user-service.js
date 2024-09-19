@@ -136,9 +136,30 @@ const update = async (request) => {
 
 }
 
+const logout = async (token) => {
+    const getToken = validate(getUserValidation, token);
+
+    const resultToken = await prismaClient.token.findUnique({
+        where: {
+            token: getToken
+        }
+    }); 
+
+    if(!resultToken){
+        throw new ResponseError(404, "User is not found");
+    }
+
+    return prismaClient.token.delete({
+        where: {
+            token: resultToken.token
+        }
+    });
+
+}
 export default {
     register,
     login,
     get,
-    update
+    update,
+    logout
 }
